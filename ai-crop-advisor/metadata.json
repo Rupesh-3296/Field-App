@@ -1,0 +1,7 @@
+{
+  "name": "AI Crop Advisor",
+  "description": "An AI-powered application that provides crop recommendations based on location, soil, and climate data. It supports multiple languages and a dark mode for better accessibility.",
+  "requestFramePermissions": [
+    "geolocation"
+  ]
+}
