@@ -2,13 +2,13 @@
 import { GoogleGenAI, Type } from '@google/genai';
 import type { FormData, Crop, Language } from '../types';
 
-if (!process.env.API_KEY) {
+if (!process.env.API_KEY || 'FAKE_API_KEY_FOR_DEVELOPMENT') {
   // This is a placeholder for development.
   // In a real environment, the API key would be securely managed.
   console.warn("API_KEY environment variable not set. Using a placeholder.");
 }
 
-const ai = new GoogleGenAI({ apiKey: process.env.API_KEY as string });
+const ai = new GoogleGenAI({ apiKey: process.env.API_KEY || 'FAKE_API_KEY_FOR_DEVELOPMENT' as string });
 
 const cropRecommendationSchema = {
     type: Type.ARRAY,
@@ -17,7 +17,7 @@ const cropRecommendationSchema = {
       properties: {
         cropName: { type: Type.STRING, description: 'The common name of the crop.' },
         scientificName: { type: Type.STRING, description: 'The scientific (Latin) name of the crop.' },
-        emoji: { type: Type.STRING, description: 'A single, suitable emoji that represents the crop (e.g., 🌾 for rice).' },
+        emoji: { type: Type.STRING, description: 'A single, suitable emoji that represents the crop (e.g., ð¾ for rice).' },
         description: { type: Type.STRING, description: 'A brief description of the crop and why it is suitable.' },
         plantingSeason: { type: Type.STRING, description: 'The optimal season or months for planting.' },
         waterNeeds: { type: Type.STRING, description: 'General water requirements (e.g., Low, Medium, High).' },
@@ -60,7 +60,7 @@ export const getCropRecommendations = async (formData: FormData, thinkingMode: b
     For each crop, provide the following details:
     - 'cropName': The common name of the crop.
     - 'scientificName': The scientific (Latin) name of the crop (if available).
-    - 'emoji': A single, suitable emoji that represents the crop (e.g., 🌾 for rice).
+    - 'emoji': A single, suitable emoji that represents the crop (e.g., ð¾ for rice).
     - 'description': A brief description of the crop and why it is suitable for the given conditions.
     - 'plantingSeason': The optimal season or months for planting.
     - 'waterNeeds': General water requirements (e.g., Low, Medium, High).
